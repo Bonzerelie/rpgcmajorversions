@@ -1,40 +1,21 @@
-const startScreen = document.getElementById('start-screen');
+const startButton = document.getElementById('start-button');
 const gameScreen = document.getElementById('game-screen');
-const noteButtonsContainer = document.getElementById('note-buttons-container');
-const promptText = document.getElementById('prompt');
+const startScreen = document.getElementById('start-screen');
 const playRefBtn = document.getElementById('play-reference');
 const replayNoteBtn = document.getElementById('replay-note');
 const nextBtn = document.getElementById('next-button');
 const resetScoreBtn = document.getElementById('reset-score');
-const backButton = document.getElementById('back-button');
+const promptText = document.getElementById('prompt');
+const noteButtons = document.querySelectorAll('.blue-button');
 const displayNotesBtn = document.getElementById('display-notes');
 const displayDegreesBtn = document.getElementById('display-degrees');
 const scaleLabel = document.getElementById('scale-label');
 const octaveLabel = document.getElementById('octave-label');
+
 const correctCount = document.getElementById('correct-count');
 const incorrectCount = document.getElementById('incorrect-count');
 const totalCount = document.getElementById('total-count');
 const accuracyDisplay = document.getElementById('accuracy');
-
-const noteMap = {
-  'C': ['c4', 'c5'],
-  'D': ['d4'],
-  'E': ['e4'],
-  'F': ['f4'],
-  'G': ['g4'],
-  'A': ['a4'],
-  'B': ['b4']
-};
-
-const degreeMap = {
-  'C': '1st',
-  'D': '2nd',
-  'E': '3rd',
-  'F': '4th',
-  'G': '5th',
-  'A': '6th',
-  'B': '7th'
-};
 
 let currentNote = '';
 let audio = new Audio();
@@ -42,8 +23,19 @@ let correct = 0;
 let incorrect = 0;
 let isAnswered = false;
 let showDegrees = false;
-let currentMode = 7;
-let currentNotes = [];
+let currentMode = 0; // Default to no mode selected
+
+// Define the note sets for each version of the game
+const first3Notes = ['c4', 'd4', 'e4']; // First 3 notes
+const first5Notes = ['c4', 'd4', 'e4', 'f4', 'g4']; // First 5 notes
+const fullOctaveNotes = ['c4', 'd4', 'e4', 'f4', 'g4', 'a4', 'b4', 'c5']; // Full octave notes including c5
+
+// Function to get the current note set based on the mode selected
+function getNoteSet() {
+    if (currentMode === 3) return first3Notes;
+    if (currentMode === 5) return first5Notes;
+    return fullOctaveNotes; // Full octave (including c5)
+}
 
 function getNoteName(filename) {
   for (const [name, files] of Object.entries(noteMap)) {
@@ -57,38 +49,29 @@ function playNote(noteFile) {
   audio.play();
 }
 
+function startGame() {
+  startScreen.classList.add('hidden');
+  gameScreen.classList.remove('hidden');
+  loadNewNote();
+}
+
 function updateNoteButtonLabels() {
-  const buttons = noteButtonsContainer.querySelectorAll('.blue-button');
-  buttons.forEach(btn => {
+  noteButtons.forEach(btn => {
     const note = btn.getAttribute('data-note');
     btn.textContent = showDegrees ? degreeMap[note] : note;
   });
 }
 
-function buildNoteButtons() {
-  noteButtonsContainer.innerHTML = '';
-  const keys = Object.keys(noteMap).slice(0, currentMode);
-  currentNotes = keys.map(key => noteMap[key][0]);
-
-  keys.forEach(note => {
-    const btn = document.createElement('button');
-    btn.className = 'blue-button';
-    btn.setAttribute('data-note', note);
-    btn.textContent = showDegrees ? degreeMap[note] : note;
-    btn.addEventListener('click', handleAnswer);
-    noteButtonsContainer.appendChild(btn);
-  });
-}
-
 function loadNewNote() {
   isAnswered = false;
-  buildNoteButtons();
-  const buttons = noteButtonsContainer.querySelectorAll('.blue-button');
-  buttons.forEach(btn => {
+  noteButtons.forEach(btn => {
     btn.disabled = false;
     btn.classList.remove('correct', 'incorrect');
   });
-  currentNote = currentNotes[Math.floor(Math.random() * currentNotes.length)];
+
+  const noteSet = getNoteSet();
+  currentNote = noteSet[Math.floor(Math.random() * noteSet.length)]; // Pick from the correct set
+
   playNote(currentNote);
   promptText.textContent = 'Which note was played?';
   nextBtn.disabled = true;
@@ -110,8 +93,7 @@ function handleAnswer(e) {
   } else {
     incorrect++;
     e.target.classList.add('incorrect');
-    const correctBtn = [...noteButtonsContainer.querySelectorAll('.blue-button')]
-      .find(btn => btn.getAttribute('data-note') === correctName);
+    const correctBtn = [...noteButtons].find(btn => btn.getAttribute('data-note') === correctName);
     if (correctBtn) correctBtn.classList.add('correct');
     promptText.textContent = showDegrees
       ? `Incorrect! ❌ The note was the ${degreeMap[correctName]} scale degree`
@@ -120,7 +102,7 @@ function handleAnswer(e) {
 
   updateScore();
   nextBtn.disabled = false;
-  [...noteButtonsContainer.querySelectorAll('.blue-button')].forEach(btn => btn.disabled = true);
+  noteButtons.forEach(btn => btn.disabled = true);
 }
 
 function updateScore() {
@@ -143,36 +125,32 @@ function toggleDisplay(mode) {
   displayNotesBtn.classList.toggle('selected', !showDegrees);
   displayDegreesBtn.classList.toggle('selected', showDegrees);
   scaleLabel.textContent = showDegrees ? 'Diatonic - Major Scale' : 'Diatonic - C Major Scale';
-if (currentMode === 3) {
-  octaveLabel.textContent = 'Notes C, D and E from one octave';
-} else if (currentMode === 5) {
-  octaveLabel.textContent = 'Notes C, D, E, F and G from one octave';
-} else {
-  octaveLabel.textContent = 'One Octave (Notes C4 to C5)';
-}
+  octaveLabel.textContent = showDegrees ? 'One Octave (C4-C5)' : 'One Octave (C4-C5)';
   playRefBtn.textContent = showDegrees ? 'Play Reference (Tonic)' : 'Play Reference (C - Tonic)';
   promptText.textContent = 'Which note was played?';
 }
 
-document.querySelectorAll('.mode-button').forEach(btn =>
-  btn.addEventListener('click', () => {
-    currentMode = parseInt(btn.getAttribute('data-mode'), 10);
-    startScreen.classList.add('hidden');
-    gameScreen.classList.remove('hidden');
-    resetScore();
-    toggleDisplay('notes');
-    loadNewNote();
-  })
-);
-
-backButton.addEventListener('click', () => {
-  gameScreen.classList.add('hidden');
-  startScreen.classList.remove('hidden');
+// Set the mode when the player selects an option
+document.getElementById('mode-3').addEventListener('click', () => {
+  currentMode = 3; // First 3 notes only
+  startGame();
 });
 
+document.getElementById('mode-5').addEventListener('click', () => {
+  currentMode = 5; // First 5 notes only
+  startGame();
+});
+
+document.getElementById('mode-8').addEventListener('click', () => {
+  currentMode = 8; // Entire octave (including c5)
+  startGame();
+});
+
+startButton.addEventListener('click', startGame);
 playRefBtn.addEventListener('click', () => playNote('c4'));
 replayNoteBtn.addEventListener('click', () => playNote(currentNote));
 nextBtn.addEventListener('click', loadNewNote);
 resetScoreBtn.addEventListener('click', resetScore);
+noteButtons.forEach(btn => btn.addEventListener('click', handleAnswer));
 displayNotesBtn.addEventListener('click', () => toggleDisplay('notes'));
 displayDegreesBtn.addEventListener('click', () => toggleDisplay('degrees'));
