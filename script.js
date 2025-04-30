@@ -46,8 +46,8 @@ const degreeMap = {
   'B': '7th'
 };
 
+// Adding the event listener for start button
 startButton.addEventListener('click', startGame);
-
 
 function updateNoteRange() {
   switch (currentMode) {
@@ -120,4 +120,54 @@ function handleAnswer(e) {
     const correctBtn = [...noteButtons].find(btn => btn.getAttribute('data-note') === correctName);
     if (correctBtn) correctBtn.classList.add('correct');
     promptText.textContent = showDegrees
-      ? `Incorrect! ❌ The note was the ${degreeMap[correctName]} scale
+      ? `Incorrect! ❌ The note was the ${degreeMap[correctName]} scale degree`
+      : `Incorrect! ❌ The note was ${correctName}`;
+  }
+
+  nextBtn.disabled = false;
+  updateScoreboard();
+}
+
+// Update the scoreboard
+function updateScoreboard() {
+  const total = correct + incorrect;
+  const accuracy = total > 0 ? (correct / total) * 100 : 0;
+
+  correctCount.textContent = correct;
+  incorrectCount.textContent = incorrect;
+  totalCount.textContent = total;
+  accuracyDisplay.textContent = accuracy.toFixed(1) + '%';
+}
+
+// Event listeners for note buttons
+noteButtons.forEach(button => {
+  button.addEventListener('click', handleAnswer);
+});
+
+// Other event listeners for the game (replay, next, mode select, etc.)
+replayNoteBtn.addEventListener('click', () => playNote(currentNote));
+nextBtn.addEventListener('click', loadNewNote);
+resetScoreBtn.addEventListener('click', () => {
+  correct = 0;
+  incorrect = 0;
+  updateScoreboard();
+});
+
+displayNotesBtn.addEventListener('click', () => {
+  showDegrees = false;
+  updateNoteButtonLabels();
+  displayNotesBtn.classList.add('selected');
+  displayDegreesBtn.classList.remove('selected');
+});
+
+displayDegreesBtn.addEventListener('click', () => {
+  showDegrees = true;
+  updateNoteButtonLabels();
+  displayDegreesBtn.classList.add('selected');
+  displayNotesBtn.classList.remove('selected');
+});
+
+modeSelect.addEventListener('change', () => {
+  currentMode = modeSelect.value;
+  loadNewNote();
+});
