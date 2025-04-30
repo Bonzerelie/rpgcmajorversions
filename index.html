@@ -1,39 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Relative Pitch Game</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relative Pitch Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+
     <!-- Start Screen -->
-    <div id="start-screen">
-      <h1>Choose Your Game</h1>
-      <button id="one-octave-btn" class="green-button">One Octave (C4–C5)</button>
-      <button id="two-octave-btn" class="green-button">Two Octave (C3–C5)</button>
-      <button id="three-octave-btn" class="green-button">Three Octave (C3–C6)</button>
+    <div id="start-screen" class="screen">
+        <h1>Welcome to the Relative Pitch Game</h1>
+        <p>Select a game mode:</p>
+        <button id="one-octave-btn">One Octave (C4–B4)</button>
+        <button id="two-octave-btn">Two Octaves (C3–B4)</button>
+        <button id="three-octave-btn">Three Octaves (C3–B5)</button>
     </div>
 
     <!-- One Octave Game -->
-    <div id="one-octave-game" class="hidden">
-      <button id="back-btn-1" class="green-button">Back</button>
-      <!-- One Octave Game Content Here -->
+    <div id="one-octave-game" class="game-screen hidden">
+        <button id="back-btn-1" class="back-btn">Back to Start</button>
+        <h2>One Octave (C4–B4)</h2>
+        <p id="prompt">Which note was played?</p>
+        <button id="play-reference">Play Reference Note (C4)</button>
+        <div class="note-buttons">
+            <button class="blue-button" data-note="C">C</button>
+            <button class="blue-button" data-note="D">D</button>
+            <button class="blue-button" data-note="E">E</button>
+            <button class="blue-button" data-note="F">F</button>
+            <button class="blue-button" data-note="G">G</button>
+            <button class="blue-button" data-note="A">A</button>
+            <button class="blue-button" data-note="B">B</button>
+        </div>
+        <div class="controls">
+            <button id="replay-note">Replay Note</button>
+            <button id="next-button" disabled>Next</button>
+        </div>
+        <div class="score">
+            <p>Correct: <span id="correct-count">0</span></p>
+            <p>Incorrect: <span id="incorrect-count">0</span></p>
+            <p>Total: <span id="total-count">0</span></p>
+            <p>Accuracy: <span id="accuracy">0.0%</span></p>
+            <button id="reset-score">Reset Score</button>
+        </div>
+        <div class="display-toggle">
+            <button id="display-notes" class="selected">Display Notes</button>
+            <button id="display-degrees">Display Degrees</button>
+        </div>
     </div>
 
     <!-- Two Octave Game -->
-    <div id="two-octave-game" class="hidden">
-      <button id="back-btn-2" class="green-button">Back</button>
-      <!-- Two Octave Game Content Here -->
+    <div id="two-octave-game" class="game-screen hidden">
+        <button id="back-btn-2" class="back-btn">Back to Start</button>
+        <h2>Two Octaves (C3–B4)</h2>
+        <p id="prompt">Which note was played?</p>
+        <button id="play-reference">Play Reference Note (C4)</button>
+        <div class="note-buttons">
+            <button class="blue-button" data-note="C">C</button>
+            <button class="blue-button" data-note="D">D</button>
+            <button class="blue-button" data-note="E">E</button>
+            <button class="blue-button" data-note="F">F</button>
+            <button class="blue-button" data-note="G">G</button>
+            <button class="blue-button" data-note="A">A</button>
+            <button class="blue-button" data-note="B">B</button>
+        </div>
+        <div class="controls">
+            <button id="replay-note">Replay Note</button>
+            <button id="next-button" disabled>Next</button>
+        </div>
+        <div class="score">
+            <p>Correct: <span id="correct-count">0</span></p>
+            <p>Incorrect: <span id="incorrect-count">0</span></p>
+            <p>Total: <span id="total-count">0</span></p>
+            <p>Accuracy: <span id="accuracy">0.0%</span></p>
+            <button id="reset-score">Reset Score</button>
+        </div>
+        <div class="display-toggle">
+            <button id="display-notes" class="selected">Display Notes</button>
+            <button id="display-degrees">Display Degrees</button>
+        </div>
     </div>
 
     <!-- Three Octave Game -->
-    <div id="three-octave-game" class="hidden">
-      <button id="back-btn-3" class="green-button">Back</button>
-      <!-- Three Octave Game Content Here -->
+    <div id="three-octave-game" class="game-screen hidden">
+        <button id="back-btn-3" class="back-btn">Back to Start</button>
+        <h2>Three Octaves (C3–B5)</h2>
+        <p id="prompt">Which note was played?</p>
+        <button id="play-reference">Play Reference Note (C4)</button>
+        <div class="note-buttons">
+            <button class="blue-button" data-note="C">C</button>
+            <button class="blue-button" data-note="D">D</button>
+            <button class="blue-button" data-note="E">E</button>
+            <button class="blue-button" data-note="F">F</button>
+            <button class="blue-button" data-note="G">G</button>
+            <button class="blue-button" data-note="A">A</button>
+            <button class="blue-button" data-note="B">B</button>
+        </div>
+        <div class="controls">
+            <button id="replay-note">Replay Note</button>
+            <button id="next-button" disabled>Next</button>
+        </div>
+        <div class="score">
+            <p>Correct: <span id="correct-count">0</span></p>
+            <p>Incorrect: <span id="incorrect-count">0</span></p>
+            <p>Total: <span id="total-count">0</span></p>
+            <p>Accuracy: <span id="accuracy">0.0%</span></p>
+            <button id="reset-score">Reset Score</button>
+        </div>
+        <div class="display-toggle">
+            <button id="display-notes" class="selected">Display Notes</button>
+            <button id="display-degrees">Display Degrees</button>
+        </div>
     </div>
-  </div>
-  <script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>
