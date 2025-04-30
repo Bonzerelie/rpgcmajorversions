@@ -148,7 +148,7 @@ if (currentMode === 3) {
 } else if (currentMode === 5) {
   octaveLabel.textContent = 'Notes C, D, E, F and G from one octave';
 } else {
-  octaveLabel.textContent = 'One Octave (Notes C to B)';
+  octaveLabel.textContent = 'One Octave (Notes C4 to C5)';
 }
   playRefBtn.textContent = showDegrees ? 'Play Reference (Tonic)' : 'Play Reference (C - Tonic)';
   promptText.textContent = 'Which note was played?';
