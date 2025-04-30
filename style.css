@@ -11,7 +11,7 @@ body {
   padding: 20px;
 }
 
-#start-screen, #game-screen {
+#start-screen, #one-octave-game, #two-octave-game, #three-octave-game {
   text-align: center;
 }
 
@@ -19,24 +19,15 @@ body {
   display: none;
 }
 
-.start-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100vh;
-  padding-top: 40px;
+h1 {
+  font-size: 24px;
 }
 
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
+h2 {
+  font-size: 18px;
 }
 
-.green-button, .blue-button, .toggle-button {
+.green-button, .blue-button {
   white-space: nowrap;
   padding: 8px 14px;
   font-size: 16px;
@@ -113,8 +104,4 @@ body {
 .toggle-button.selected {
   background-color: #2196F3;
   color: white;
-}
-
-.mode-select {
-  margin: 15px 0;
 }
