@@ -46,6 +46,9 @@ const degreeMap = {
   'B': '7th'
 };
 
+startButton.addEventListener('click', startGame);
+
+
 function updateNoteRange() {
   switch (currentMode) {
     case 'full-octave':
