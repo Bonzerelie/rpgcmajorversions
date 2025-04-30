@@ -143,7 +143,13 @@ function toggleDisplay(mode) {
   displayNotesBtn.classList.toggle('selected', !showDegrees);
   displayDegreesBtn.classList.toggle('selected', showDegrees);
   scaleLabel.textContent = showDegrees ? 'Diatonic - Major Scale' : 'Diatonic - C Major Scale';
-  octaveLabel.textContent = 'One Octave (C4–C5)';
+if (currentMode === 3) {
+  octaveLabel.textContent = 'Notes C, D and E from one octave';
+} else if (currentMode === 5) {
+  octaveLabel.textContent = 'Notes C, D, E, F and G from one octave';
+} else {
+  octaveLabel.textContent = 'One Octave (Notes C to B)';
+}
   playRefBtn.textContent = showDegrees ? 'Play Reference (Tonic)' : 'Play Reference (C - Tonic)';
   promptText.textContent = 'Which note was played?';
 }
