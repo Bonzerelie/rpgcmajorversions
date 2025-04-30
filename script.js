@@ -142,7 +142,7 @@ function toggleDisplay(mode) {
   updateNoteButtonLabels();
   displayNotesBtn.classList.toggle('selected', !showDegrees);
   displayDegreesBtn.classList.toggle('selected', showDegrees);
-  scaleLabel.textContent = showDegrees ? 'Diatonic - Major Scale' : 'Diatonic - C Major Scale';
+  scaleLabel.textContent = showDegrees ? 'Diatonic notes of the Major Scale' : 'Diatonic notes of the C Major Scale';
 if (currentMode === 3) {
   octaveLabel.textContent = 'Notes C, D and E from one octave';
 } else if (currentMode === 5) {
