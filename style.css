@@ -1,107 +1,140 @@
+/* Global styles */
 body {
-  font-family: sans-serif;
-  background-color: white;
-  margin: 0;
-  padding: 0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.container {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 20px;
+.screen {
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-#start-screen, #one-octave-game, #two-octave-game, #three-octave-game {
-  text-align: center;
+h1, h2 {
+    color: #333;
+}
+
+/* Buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+/* Game screen */
+.game-screen {
+    display: none;
 }
 
 .hidden {
-  display: none;
-}
-
-h1 {
-  font-size: 24px;
-}
-
-h2 {
-  font-size: 18px;
-}
-
-.green-button, .blue-button {
-  white-space: nowrap;
-  padding: 8px 14px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  border: none;
-  max-width: 100%;
-}
-
-.green-button {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.green-button:disabled {
-  background-color: #9E9E9E;
-  cursor: not-allowed;
+    display: none;
 }
 
 .blue-button {
-  background-color: #2196F3;
-  color: white;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
 }
 
-.correct {
-  background-color: #4CAF50 !important;
+.blue-button:hover {
+    background-color: #0056b3;
 }
 
-.incorrect {
-  background-color: #F44336 !important;
+/* Controls */
+.controls {
+    margin-top: 20px;
 }
 
-#note-buttons-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 15px;
+.controls button {
+    margin-right: 15px;
 }
 
-.blue-button {
-  flex: 1 1 auto;
-  max-width: 40px;
-  min-width: 34px;
-  min-height: 40px;
-  padding: 4px;
-  box-sizing: border-box;
+/* Score and accuracy */
+.score {
+    margin-top: 30px;
+    font-size: 18px;
 }
 
-#reset-score {
-  margin-top: 10px;
+.display-toggle {
+    margin-top: 20px;
 }
 
-.scoreboard {
-  text-align: center;
+.display-toggle button {
+    margin-right: 10px;
 }
 
-#game-screen p {
-  font-size: 14px;
-  color: #333;
-  margin-top: 5px;
+.selected {
+    background-color: #555;
 }
 
-.toggle-display {
-  margin: 10px 0;
+/* Back buttons */
+.back-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 14px;
+    padding: 8px 12px;
+    background-color: #f44336;
+    color: white;
 }
 
-.toggle-button {
-  background-color: #ddd;
-  color: black;
-  margin: 0 5px;
+.back-btn:hover {
+    background-color: #d32f2f;
 }
 
-.toggle-button.selected {
-  background-color: #2196F3;
-  color: white;
+/* Note buttons */
+.note-buttons {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.note-buttons button {
+    padding: 15px;
+    font-size: 18px;
+    width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .note-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .note-buttons button {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .note-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .note-buttons button {
+        padding: 10px;
+    }
 }
